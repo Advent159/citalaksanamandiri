@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim Kami - Citalaksanamandiri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+        }
+        
+        .team-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .team-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .team-card:hover .team-image {
+            transform: scale(1.05);
+        }
+        
+        .social-links {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover .social-links {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Progress Bar Styles */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        /* Floating Action Button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-action-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating-action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+        }
+        
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Staggered animations for different sections */
+        .hero-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.2s forwards;
+        }
+        
+        .team-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.4s forwards;
+        }
+        
+        .stats-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+        }
+        
+        .values-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s forwards;
+        }
+        
+        .cta-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+        
+        /* Individual card animations */
+        .team-card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Stagger animation for team cards */
+        .team-card:nth-child(1) { animation-delay: 0.5s; }
+        .team-card:nth-child(2) { animation-delay: 0.6s; }
+        .team-card:nth-child(3) { animation-delay: 0.7s; }
+        .team-card:nth-child(4) { animation-delay: 0.8s; }
+        .team-card:nth-child(5) { animation-delay: 0.9s; }
+        .team-card:nth-child(6) { animation-delay: 1s; }
+        
+        /* Stats animation */
+        .stat-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .stat-item:nth-child(1) { animation-delay: 0.7s; }
+        .stat-item:nth-child(2) { animation-delay: 0.8s; }
+        .stat-item:nth-child(3) { animation-delay: 0.9s; }
+        .stat-item:nth-child(4) { animation-delay: 1s; }
+        
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+    
+    <!-- Floating Action Button -->
+    <div class="floating-action-btn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Header/Navbar -->
+    <header class="sticky-nav fixed top-0 w-full z-50 bg-transparent transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-3 shadow-lg transform transition-transform duration-300 hover:rotate-12 border border-white/30">
+                        <span class="text-white font-bold text-xl">C</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white logo-text">Citalaksanamandiri</h1>
+                        <p class="text-xs text-white/80 logo-subtext">Professional Contractor</p>
+                    </div>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.php" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        Beranda
+                    </a>
+                    
+                    <!-- Tentang Kami Dropdown -->
+                    <div class="nav-dropdown">
+                        <a href="index.php#about" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Tentang Kami
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="index.php#about" class="dropdown-item">
+                                <i class="fas fa-building"></i>
+                                Profil Perusahaan
+                            </a>
+                            <a href="visi_misi.php" class="dropdown-item">
+                                <i class="fas fa-eye"></i>
+                                Visi & Misi
+                            </a>
+                            <a href="tim_kami.php" class="dropdown-item">
+                                <i class="fas fa-users"></i>
+                                Tim Kami
+                            </a>
+                            <a href="sertifikasi.php" class="dropdown-item">
+                                <i class="fas fa-award"></i>
+                                Sertifikasi
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Layanan Dropdown -->
+                    <div class="nav-dropdown">
+                        <a href="index.php#services" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                            <i class="fas fa-concierge-bell mr-2"></i>
+                            Layanan
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-home"></i>
+                                Konstruksi Perumahan
+                            </a>
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-building"></i>
+                                Konstruksi Komersial
+                            </a>
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-industry"></i>
+                                Konstruksi Industri
+                            </a>
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-tools"></i>
+                                Renovasi & Perbaikan
+                            </a>
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-pencil-ruler"></i>
+                                Desain Arsitektur
+                            </a>
+                            <a href="index.php#services" class="dropdown-item">
+                                <i class="fas fa-hard-hat"></i>
+                                Manajemen Proyek
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <a href="index.php#projects" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-project-diagram mr-2"></i>
+                        Proyek
+                    </a>
+                    <a href="index.php#process" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-tasks mr-2"></i>
+                        Proses Kerja
+                    </a>
+                    <a href="index.php#testimonials" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-comments mr-2"></i>
+                        Testimoni
+                    </a>
+                    <a href="index.php#contact" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Kontak
+                    </a>
+                </nav>
+                
+                <button id="mobile-menu-toggle" class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay md:hidden"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu md:hidden">
+        <button id="mobile-nav-close" class="mobile-nav-close">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <a href="index.php" class="mobile-nav-link">
+            <i class="fas fa-home"></i>
+            Beranda
+        </a>
+        
+        <!-- Tentang Kami Dropdown Mobile -->
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">
+                <span class="flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Tentang Kami
+                </span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-menu">
+                <a href="index.php#about" class="mobile-dropdown-item">
+                    <i class="fas fa-building"></i>
+                    Profil Perusahaan
+                </a>
+                <a href="visi_misi.php" class="mobile-dropdown-item">
+                    <i class="fas fa-eye"></i>
+                    Visi & Misi
+                </a>
+                <a href="tim_kami.php" class="mobile-dropdown-item">
+                    <i class="fas fa-users"></i>
+                    Tim Kami
+                </a>
+                <a href="sertifikasi.php" class="mobile-dropdown-item">
+                    <i class="fas fa-award"></i>
+                    Sertifikasi
+                </a>
+            </div>
+        </div>
+        
+        <!-- Layanan Dropdown Mobile -->
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">
+                <span class="flex items-center">
+                    <i class="fas fa-concierge-bell mr-2"></i>
+                    Layanan
+                </span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-menu">
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-home"></i>
+                    Konstruksi Perumahan
+                </a>
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-building"></i>
+                    Konstruksi Komersial
+                </a>
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-industry"></i>
+                    Konstruksi Industri
+                </a>
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-tools"></i>
+                    Renovasi & Perbaikan
+                </a>
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-pencil-ruler"></i>
+                    Desain Arsitektur
+                </a>
+                <a href="index.php#services" class="mobile-dropdown-item">
+                    <i class="fas fa-hard-hat"></i>
+                    Manajemen Proyek
+                </a>
+            </div>
+        </div>
+        
+        <a href="index.php#projects" class="mobile-nav-link">
+            <i class="fas fa-project-diagram"></i>
+            Proyek
+        </a>
+        <a href="index.php#process" class="mobile-nav-link">
+            <i class="fas fa-tasks"></i>
+            Proses Kerja
+        </a>
+        <a href="index.php#testimonials" class="mobile-nav-link">
+            <i class="fas fa-comments"></i>
+            Testimoni
+        </a>
+        <a href="index.php#contact" class="mobile-nav-link">
+            <i class="fas fa-envelope"></i>
+            Kontak
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24 pt-32 hero-fade">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Tim Profesional Kami</h1>
+                <p class="text-xl text-blue-100">Bertemu dengan para ahli yang berdedikasi untuk mewujudkan impian konstruksi Anda dengan standar kualitas tertinggi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20 bg-white team-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">Tim <span class="gradient-text">Profesional</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Tim kami terdiri dari para profesional berpengalaman yang siap memberikan solusi terbaik untuk setiap proyek konstruksi Anda.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-blue-100 to-indigo-100 flex items-center justify-center team-image">
+                            <i class="fas fa-user-tie text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Ahmad Wijaya</h3>
+                        <p class="text-blue-600 font-semibold mb-3">Direktur Utama</p>
+                        <p class="text-gray-600 text-sm mb-4">Lebih dari 15 tahun pengalaman dalam industri konstruksi dengan spesialisasi manajemen proyek skala besar.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Manajemen Proyek</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Strategic Planning</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-green-100 to-teal-100 flex items-center justify-center team-image">
+                            <i class="fas fa-hard-hat text-6xl text-green-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-green-600 hover:bg-green-600 hover:text-white transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Budi Santoso</h3>
+                        <p class="text-green-600 font-semibold mb-3">Kepala Teknik</p>
+                        <p class="text-gray-600 text-sm mb-4">Ahli teknik sipil dengan pengalaman 12 tahun dalam perencanaan dan pengawasan proyek konstruksi.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Teknik Sipil</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full">Quality Control</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center team-image">
+                            <i class="fas fa-drafting-compass text-6xl text-purple-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-purple-600 hover:bg-purple-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-purple-600 hover:bg-purple-600 hover:text-white transition">
+                                <i class="fab fa-behance"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Citra Dewi</h3>
+                        <p class="text-purple-600 font-semibold mb-3">Arsitek Senior</p>
+                        <p class="text-gray-600 text-sm mb-4">Arsitek kreatif dengan spesialisasi desain bangunan modern dan berkelanjutan, telah menyelesaikan 50+ proyek.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Desain Arsitektur</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">Sustainable Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center team-image">
+                            <i class="fas fa-tools text-6xl text-orange-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-orange-600 hover:bg-orange-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Darma Putra</h3>
+                        <p class="text-orange-600 font-semibold mb-3">Supervisor Lapangan</p>
+                        <p class="text-gray-600 text-sm mb-4">Pengalaman 10 tahun dalam pengawasan lapangan dengan fokus pada keselamatan kerja dan efisiensi proyek.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Site Supervision</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Safety Management</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 5 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-teal-100 to-cyan-100 flex items-center justify-center team-image">
+                            <i class="fas fa-calculator text-6xl text-teal-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-teal-600 hover:bg-teal-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Eka Sari</h3>
+                        <p class="text-teal-600 font-semibold mb-3">Quantity Surveyor</p>
+                        <p class="text-gray-600 text-sm mb-4">Spesialis dalam estimasi biaya dan pengendalian anggaran proyek dengan akurasi tinggi dan efisiensi maksimal.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-teal-100 text-teal-700 text-xs rounded-full">Cost Estimation</span>
+                            <span class="px-3 py-1 bg-teal-100 text-teal-700 text-xs rounded-full">Budget Control</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Member 6 -->
+                <div class="team-card bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="relative overflow-hidden">
+                        <div class="w-full h-80 bg-gradient-to-br from-indigo-100 to-blue-100 flex items-center justify-center team-image">
+                            <i class="fas fa-users-cog text-6xl text-indigo-600"></i>
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity duration-300 team-card:hover:opacity-100"></div>
+                        <div class="social-links absolute bottom-4 left-0 right-0 flex justify-center space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 hover:bg-indigo-600 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 hover:bg-indigo-600 hover:text-white transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1">Fajar Nugroho</h3>
+                        <p class="text-indigo-600 font-semibold mb-3">Manajer HRD</p>
+                        <p class="text-gray-600 text-sm mb-4">Mengelola pengembangan SDM perusahaan dengan fokus pada pelatihan dan peningkatan kompetensi tim.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full">HR Management</span>
+                            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs rounded-full">Team Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white stats-fade">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="stat-item text-center">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">50+</div>
+                    <div class="text-blue-100 text-lg">Anggota Tim</div>
+                </div>
+                <div class="stat-item text-center">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">15+</div>
+                    <div class="text-blue-100 text-lg">Tahun Pengalaman</div>
+                </div>
+                <div class="stat-item text-center">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">200+</div>
+                    <div class="text-blue-100 text-lg">Proyek Selesai</div>
+                </div>
+                <div class="stat-item text-center">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">98%</div>
+                    <div class="text-blue-100 text-lg">Kepuasan Klien</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-20 bg-white values-fade">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">Nilai-Nilai <span class="gradient-text">Tim Kami</span></h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Prinsip-prinsip yang menjadi pedoman dalam setiap pekerjaan dan interaksi tim kami.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Kolaborasi</h3>
+                        <p class="text-gray-600">Bekerja sama sebagai satu tim yang solid untuk mencapai tujuan bersama dengan efisiensi maksimal.</p>
+                    </div>
+                    
+                    <div class="bg-green-50 p-6 rounded-xl border-l-4 border-green-600">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-600">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Inovasi</h3>
+                        <p class="text-gray-600">Terus mencari solusi kreatif dan teknologi terbaru untuk meningkatkan kualitas pekerjaan.</p>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-600">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-purple-600">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Profesionalisme</h3>
+                        <p class="text-gray-600">Menjunjung tinggi etika kerja, kompetensi, dan tanggung jawab dalam setiap proyek.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white cta-fade">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6">Siap Bekerja Sama dengan Kami?</h2>
+                <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+                    Tim profesional kami siap membantu mewujudkan proyek konstruksi Anda dengan standar kualitas tertinggi. 
+                    Mari berdiskusi tentang kebutuhan proyek Anda.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="index.php#contact" class="btn-primary px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center">
+                        <i class="fas fa-handshake mr-2"></i>
+                        <span>Konsultasi Gratis</span>
+                    </a>
+                    <a href="index.php#projects" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center hover:bg-gray-100 transition">
+                        <i class="fas fa-project-diagram mr-2"></i>
+                        <span>Lihat Proyek Kami</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">C</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Citalaksanamandiri</h2>
+                            <p class="text-gray-400 text-sm">Professional Contractor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 max-w-xs">Perusahaan contractor terpercaya dengan pengalaman lebih dari 10 tahun dalam industri konstruksi, memberikan solusi terbaik untuk setiap proyek Anda.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Tautan Cepat</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.php" class="text-gray-400 hover:text-white transition">Beranda</a></li>
+                            <li><a href="index.php#about" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                            <li><a href="index.php#services" class="text-gray-400 hover:text-white transition">Layanan</a></li>
+                            <li><a href="tim_kami.php" class="text-gray-400 hover:text-white transition">Tim Kami</a></li>
+                            <li><a href="index.php#contact" class="text-gray-400 hover:text-white transition">Kontak</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Layanan</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Perumahan</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Komersial</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Industri</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Renovasi</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Kontak</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-gray-400 mr-2 mt-1"></i>
+                                <span class="text-gray-400">Jl. Konstruksi No. 123, Jakarta Selatan</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-gray-400 mr-2"></i>
+                                <span class="text-gray-400">+62 21 1234 5678</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                <span class="text-gray-400">info@citalaksanamandiri.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Citalaksanamandiri. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar Functionality
+        window.addEventListener('scroll', function() {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            
+            const progressBar = document.querySelector('.progress-bar');
+            progressBar.style.width = scrollPercent + '%';
+            
+            // Show/hide floating action button
+            const floatingBtn = document.querySelector('.floating-action-btn');
+            if (scrollTop > 300) {
+                floatingBtn.classList.add('show');
+            } else {
+                floatingBtn.classList.remove('show');
+            }
+        });
+
+        // Floating Action Button - Scroll to Top
+        document.querySelector('.floating-action-btn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Sticky Navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        const mobileNavClose = document.getElementById('mobile-nav-close');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileNavOverlay.classList.add('active');
+            mobileNavMenu.classList.add('active');
+        });
+        
+        mobileNavClose.addEventListener('click', function() {
+            mobileNavOverlay.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+        });
+        
+        mobileNavOverlay.addEventListener('click', function() {
+            mobileNavOverlay.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+        });
+        
+        // Mobile Dropdown Toggle
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+        
+        mobileDropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.parentElement;
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Page Load Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in classes to sections
+            const heroSection = document.querySelector('section.bg-gradient-to-r');
+            if (heroSection) heroSection.classList.add('hero-fade');
+            
+            const teamSection = document.querySelector('section.py-20.bg-white');
+            if (teamSection) teamSection.classList.add('team-fade');
+            
+            const statsSection = document.querySelector('section.py-20.bg-gradient-to-r');
+            if (statsSection) statsSection.classList.add('stats-fade');
+            
+            const valuesSection = document.querySelectorAll('section.py-20.bg-white')[1];
+            if (valuesSection) valuesSection.classList.add('values-fade');
+            
+            const ctaSection = document.querySelectorAll('section.py-20.bg-gradient-to-r')[1];
+            if (ctaSection) ctaSection.classList.add('cta-fade');
+            
+            // Add animation to individual cards
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach((card, index) => {
+                card.style.animationDelay = `${0.5 + (index * 0.1)}s`;
+            });
+            
+            const statItems = document.querySelectorAll('.stat-item');
+            statItems.forEach((item, index) => {
+                item.style.animationDelay = `${0.7 + (index * 0.1)}s`;
+            });
+        });
+    </script>
+</body>
+</html>
