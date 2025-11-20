@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perumahan Elite Taman Sari - Citalaksanamandiri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="../style.css" rel="stylesheet">
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Progress Bar Styles */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+        
+        /* Floating Action Button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .floating-action-btn.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .floating-action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.6);
+        }
+        
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Staggered animations for different sections */
+        .hero-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.2s forwards;
+        }
+        
+        .overview-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.4s forwards;
+        }
+        
+        .gallery-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.6s forwards;
+        }
+        
+        .features-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.8s forwards;
+        }
+        
+        .stats-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+        }
+        
+        .testimonial-fade {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.2s forwards;
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(6, 200px);
+            gap: 16px;
+        }
+        
+        .gallery-item:nth-child(1) { grid-column: 1 / 7; grid-row: 1 / 4; }
+        .gallery-item:nth-child(2) { grid-column: 7 / 13; grid-row: 1 / 3; }
+        .gallery-item:nth-child(3) { grid-column: 7 / 10; grid-row: 3 / 4; }
+        .gallery-item:nth-child(4) { grid-column: 10 / 13; grid-row: 3 / 4; }
+        .gallery-item:nth-child(5) { grid-column: 1 / 5; grid-row: 4 / 7; }
+        .gallery-item:nth-child(6) { grid-column: 5 / 9; grid-row: 4 / 5; }
+        .gallery-item:nth-child(7) { grid-column: 9 / 13; grid-row: 4 / 7; }
+        .gallery-item:nth-child(8) { grid-column: 5 / 9; grid-row: 5 / 7; }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(8, 300px);
+            }
+            
+            .gallery-item:nth-child(n) {
+                grid-column: 1;
+                grid-row: auto;
+            }
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .lightbox-prev {
+            left: 20px;
+        }
+        
+        .lightbox-next {
+            right: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Progress Bar -->
+    <div class="progress-bar"></div>
+    
+    <!-- Floating Action Button -->
+    <div class="floating-action-btn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <img src="" alt="" class="lightbox-content" id="lightboxImage">
+    </div>
+    
+    <!-- Header/Navbar -->
+    <header class="sticky-nav fixed top-0 w-full z-50 bg-transparent transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-3 shadow-lg transform transition-transform duration-300 hover:rotate-12 border border-white/30">
+                        <span class="text-white font-bold text-xl">C</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white logo-text">Citalaksanamandiri</h1>
+                        <p class="text-xs text-white/80 logo-subtext">Professional Contractor</p>
+                    </div>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="../index.html" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        Beranda
+                    </a>
+                    
+                    <!-- Tentang Kami Dropdown -->
+                    <div class="nav-dropdown">
+                        <a href="../index.html#about" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Tentang Kami
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="../index.html#about" class="dropdown-item">
+                                <i class="fas fa-building"></i>
+                                Profil Perusahaan
+                            </a>
+                            <a href="../visi_misi.html" class="dropdown-item">
+                                <i class="fas fa-eye"></i>
+                                Visi & Misi
+                            </a>
+                            <a href="../tim.html" class="dropdown-item">
+                                <i class="fas fa-users"></i>
+                                Tim Kami
+                            </a>
+                            <a href="../sertifikasi.html" class="dropdown-item">
+                                <i class="fas fa-award"></i>
+                                Sertifikasi
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Layanan Dropdown -->
+                    <div class="nav-dropdown">
+                        <a href="../index.html#services" class="nav-link text-white/90 hover:text-white transition flex items-center">
+                            <i class="fas fa-concierge-bell mr-2"></i>
+                            Layanan
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-home"></i>
+                                Konstruksi Perumahan
+                            </a>
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-building"></i>
+                                Konstruksi Komersial
+                            </a>
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-industry"></i>
+                                Konstruksi Industri
+                            </a>
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-tools"></i>
+                                Renovasi & Perbaikan
+                            </a>
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-pencil-ruler"></i>
+                                Desain Arsitektur
+                            </a>
+                            <a href="../index.html#services" class="dropdown-item">
+                                <i class="fas fa-hard-hat"></i>
+                                Manajemen Proyek
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <a href="../index.html#projects" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-project-diagram mr-2"></i>
+                        Proyek
+                    </a>
+                    <a href="../index.html#process" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-tasks mr-2"></i>
+                        Proses Kerja
+                    </a>
+                    <a href="../index.html#testimonials" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-comments mr-2"></i>
+                        Testimoni
+                    </a>
+                    <a href="../index.html#contact" class="nav-link text-white/90 hover:text-white transition">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Kontak
+                    </a>
+                </nav>
+                
+                <button id="mobile-menu-toggle" class="md:hidden text-white">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay md:hidden"></div>
+    <div id="mobile-nav-menu" class="mobile-nav-menu md:hidden">
+        <button id="mobile-nav-close" class="mobile-nav-close">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <a href="../index.html" class="mobile-nav-link">
+            <i class="fas fa-home"></i>
+            Beranda
+        </a>
+        
+        <!-- Tentang Kami Dropdown Mobile -->
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">
+                <span class="flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    Tentang Kami
+                </span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-menu">
+                <a href="../index.html#about" class="mobile-dropdown-item">
+                    <i class="fas fa-building"></i>
+                    Profil Perusahaan
+                </a>
+                <a href="../visi_misi.html" class="mobile-dropdown-item">
+                    <i class="fas fa-eye"></i>
+                    Visi & Misi
+                </a>
+                <a href="../tim_kami.html" class="mobile-dropdown-item">
+                    <i class="fas fa-users"></i>
+                    Tim Kami
+                </a>
+                <a href="../sertifikasi.html" class="mobile-dropdown-item">
+                    <i class="fas fa-award"></i>
+                    Sertifikasi
+                </a>
+            </div>
+        </div>
+        
+        <!-- Layanan Dropdown Mobile -->
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle">
+                <span class="flex items-center">
+                    <i class="fas fa-concierge-bell mr-2"></i>
+                    Layanan
+                </span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="mobile-dropdown-menu">
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-home"></i>
+                    Konstruksi Perumahan
+                </a>
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-building"></i>
+                    Konstruksi Komersial
+                </a>
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-industry"></i>
+                    Konstruksi Industri
+                </a>
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-tools"></i>
+                    Renovasi & Perbaikan
+                </a>
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-pencil-ruler"></i>
+                    Desain Arsitektur
+                </a>
+                <a href="../index.html#services" class="mobile-dropdown-item">
+                    <i class="fas fa-hard-hat"></i>
+                    Manajemen Proyek
+                </a>
+            </div>
+        </div>
+        
+        <a href="../index.html#projects" class="mobile-nav-link">
+            <i class="fas fa-project-diagram"></i>
+            Proyek
+        </a>
+        <a href="../index.html#process" class="mobile-nav-link">
+            <i class="fas fa-tasks"></i>
+            Proses Kerja
+        </a>
+        <a href="../index.html#testimonials" class="mobile-nav-link">
+            <i class="fas fa-comments"></i>
+            Testimoni
+        </a>
+        <a href="../index.html#contact" class="mobile-nav-link">
+            <i class="fas fa-envelope"></i>
+            Kontak
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-24 pt-32 hero-fade">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-6">
+                    <div class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                    <span class="text-sm font-medium">Proyek Selesai 2023</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Perumahan Elite Taman Sari</h1>
+                <p class="text-xl text-blue-100">Kompleks perumahan mewah dengan 50 unit rumah di area strategis Jakarta Selatan</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section class="py-20 bg-white overview-fade">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <div class="lg:w-2/3">
+                    <div class="mb-8">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">Detail <span class="gradient-text">Proyek</span></h2>
+                        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                            Perumahan Elite Taman Sari adalah proyek prestisius yang terletak di kawasan strategis Jakarta Selatan. 
+                            Dengan konsep "Modern Luxury Living", kami menghadirkan 50 unit rumah mewah yang dirancang untuk 
+                            memberikan kenyamanan maksimal dengan sentuhan arsitektur kontemporer.
+                        </p>
+                        <p class="text-gray-600 leading-relaxed">
+                            Proyek senilai Rp 75 miliar ini berhasil diselesaikan 2 minggu lebih cepat dari jadwal yang ditentukan, 
+                            berkat perencanaan yang matang dan eksekusi yang profesional dari tim Citalaksanamandiri. Setiap unit 
+                            dilengkapi dengan fasilitas premium dan teknologi smart home untuk pengalaman hidup yang lebih baik.
+                        </p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-50 p-6 rounded-xl border-l-4 border-blue-600">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Pencapaian Utama</h3>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Selesai 2 minggu lebih cepat
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Anggaran sesuai rencana
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Zero accident selama konstruksi
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    Semua unit terjual dalam 3 bulan
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="bg-green-50 p-6 rounded-xl border-l-4 border-green-600">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-3">Teknologi Terintegrasi</h3>
+                            <ul class="text-gray-600 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-home text-green-500 mr-2"></i>
+                                    Smart Home System
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-solar-panel text-green-500 mr-2"></i>
+                                    Panel Surya Hybrid
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-recycle text-green-500 mr-2"></i>
+                                    Sistem Pengolahan Air
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                                    Keamanan 24/7
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/3">
+                    <div class="bg-gray-50 p-6 rounded-xl sticky top-24">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Informasi Proyek</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                                <span class="text-gray-600">Klien</span>
+                                <span class="font-semibold text-gray-800">PT. Graha Indah</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                                <span class="text-gray-600">Lokasi</span>
+                                <span class="font-semibold text-gray-800">Jakarta Selatan</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                                <span class="text-gray-600">Periode</span>
+                                <span class="font-semibold text-gray-800">2022 - 2023</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                                <span class="text-gray-600">Nilai Proyek</span>
+                                <span class="font-semibold text-gray-800">Rp 75 Miliar</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pb-3 border-b border-gray-200">
+                                <span class="text-gray-600">Jenis</span>
+                                <span class="font-semibold text-gray-800">Perumahan Mewah</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Status</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Selesai</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 pt-6 border-t border-gray-200">
+                            <a href="../index.html#contact" class="btn-primary w-full py-3 rounded-lg font-semibold flex items-center justify-center mb-3">
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                Konsultasi Proyek Serupa
+                            </a>
+                            <a href="../index.html#projects" class="w-full py-3 rounded-lg font-semibold flex items-center justify-center border border-gray-300 text-gray-700 hover:bg-gray-50 transition">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                Kembali ke Portofolio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-20 bg-gray-50 gallery-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">Galeri <span class="gradient-text">Proyek</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Dokumentasi visual dari proses konstruksi hingga hasil akhir Perumahan Elite Taman Sari</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Tampak Depan Perumahan" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Desain Interior Modern" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Taman dan Landscape" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Fasilitas Kolam Renang" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Proses Konstruksi" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Dapur Modern" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Area Rekreasi Keluarga" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                
+                <div class="gallery-item project-card rounded-xl overflow-hidden cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Eksterior Rumah Type A" 
+                         class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features & Amenities -->
+    <section class="py-20 bg-white features-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">Fasilitas <span class="gradient-text">Unggulan</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Fasilitas lengkap dan teknologi modern untuk kenyamanan hidup penghuni</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-blue-600">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Sistem Keamanan Terpadu</h3>
+                    <p class="text-gray-600">CCTV 24 jam, akses kartu, security patrol, dan emergency response system untuk keamanan maksimal.</p>
+                </div>
+                
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-4 text-green-600">
+                        <i class="fas fa-leaf text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Konsep Green Living</h3>
+                    <p class="text-gray-600">Taman hijau, sistem daur ulang air, panel surya, dan material ramah lingkungan.</p>
+                </div>
+                
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-purple-600">
+                        <i class="fas fa-swimming-pool text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Fasilitas Rekreasi</h3>
+                    <p class="text-gray-600">Kolam renang, playground, jogging track, club house, dan area BBQ untuk keluarga.</p>
+                </div>
+                
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center mb-4 text-yellow-600">
+                        <i class="fas fa-wifi text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Smart Home Technology</h3>
+                    <p class="text-gray-600">Kontrol otomatis untuk pencahayaan, suhu, keamanan, dan hiburan melalui smartphone.</p>
+                </div>
+                
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4 text-red-600">
+                        <i class="fas fa-car text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Parkir dan Akses</h3>
+                    <p class="text-gray-600">Parkir bawah tanah, guest parking, dan akses jalan yang lebar dengan sistem one-way.</p>
+                </div>
+                
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                    <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mb-4 text-indigo-600">
+                        <i class="fas fa-tint text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Infrastruktur Modern</h3>
+                    <p class="text-gray-600">Sistem air bersih, listrik backup, fiber optic, dan pengolahan limbah terpadu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Statistics -->
+    <section class="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white stats-fade">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Angka <span class="text-blue-200">Prestasi</span></h2>
+                <p class="text-blue-100 max-w-2xl mx-auto">Pencapaian luar biasa dalam proyek Perumahan Elite Taman Sari</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 rounded-xl bg-white/10 backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2">50</div>
+                    <div class="text-blue-100">Unit Rumah</div>
+                </div>
+                <div class="p-6 rounded-xl bg-white/10 backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2">14</div>
+                    <div class="text-blue-100">Hari Lebih Cepat</div>
+                </div>
+                <div class="p-6 rounded-xl bg-white/10 backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2">100%</div>
+                    <div class="text-blue-100">Kepuasan Klien</div>
+                </div>
+                <div class="p-6 rounded-xl bg-white/10 backdrop-blur-sm">
+                    <div class="text-4xl font-bold mb-2">75M</div>
+                    <div class="text-blue-100">Nilai Proyek</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Testimonial -->
+    <section class="py-20 bg-white testimonial-fade">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-2xl border-l-4 border-blue-600">
+                    <div class="flex items-start mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-800 rounded-full flex items-center justify-center text-white font-bold mr-6 text-xl">
+                            GI
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">PT. Graha Indah</h3>
+                            <p class="text-gray-600">Developer Properti Terkemuka</p>
+                        </div>
+                    </div>
+                    
+                    <blockquote class="text-gray-700 text-lg leading-relaxed italic mb-6">
+                        "Kerja sama dengan Citalaksanamandiri dalam proyek Perumahan Elite Taman Sari adalah pengalaman yang luar biasa. 
+                        Mereka tidak hanya menyelesaikan proyek 2 minggu lebih cepat dari jadwal, tetapi juga menjaga kualitas konstruksi 
+                        dengan standar tertinggi. Komunikasi yang transparan dan solusi inovatif yang mereka berikan membuat proses 
+                        konstruksi berjalan sangat lancar."
+                    </blockquote>
+                    
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold text-gray-800">Budi Santoso</p>
+                            <p class="text-gray-600">Direktur Utama, PT. Graha Indah</p>
+                        </div>
+                        <div class="flex text-yellow-400 text-xl">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Tertarik dengan Proyek Serupa?</h2>
+                <p class="text-gray-600 text-xl mb-8 leading-relaxed">
+                    Tim profesional kami siap membantu mewujudkan proyek properti impian Anda dengan standar kualitas tertinggi 
+                    dan komitmen terhadap ketepatan waktu.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="../index.html#contact" class="btn-primary px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center">
+                        <i class="fas fa-handshake mr-2"></i>
+                        <span>Konsultasi Gratis</span>
+                    </a>
+                    <a href="../index.html#projects" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold inline-flex items-center justify-center border border-gray-300 hover:bg-gray-50 transition">
+                        <i class="fas fa-project-diagram mr-2"></i>
+                        <span>Lihat Proyek Lain</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">C</span>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Citalaksanamandiri</h2>
+                            <p class="text-gray-400 text-sm">Professional Contractor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 max-w-xs">Perusahaan contractor terpercaya dengan pengalaman lebih dari 10 tahun dalam industri konstruksi, memberikan solusi terbaik untuk setiap proyek Anda.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Tautan Cepat</h3>
+                        <ul class="space-y-2">
+                            <li><a href="../index.html" class="text-gray-400 hover:text-white transition">Beranda</a></li>
+                            <li><a href="../index.html#about" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                            <li><a href="../index.html#services" class="text-gray-400 hover:text-white transition">Layanan</a></li>
+                            <li><a href="../index.html#projects" class="text-gray-400 hover:text-white transition">Proyek</a></li>
+                            <li><a href="../index.html#contact" class="text-gray-400 hover:text-white transition">Kontak</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Layanan</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Perumahan</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Komersial</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Konstruksi Industri</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">Renovasi</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Kontak</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-gray-400 mr-2 mt-1"></i>
+                                <span class="text-gray-400">Jl. Konstruksi No. 123, Jakarta Selatan</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-phone text-gray-400 mr-2"></i>
+                                <span class="text-gray-400">+62 21 1234 5678</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                <span class="text-gray-400">info@citalaksanamandiri.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Citalaksanamandiri. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Progress Bar Functionality
+        window.addEventListener('scroll', function() {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollPercent = (scrollTop / (docHeight - winHeight)) * 100;
+            
+            const progressBar = document.querySelector('.progress-bar');
+            progressBar.style.width = scrollPercent + '%';
+            
+            // Show/hide floating action button
+            const floatingBtn = document.querySelector('.floating-action-btn');
+            if (scrollTop > 300) {
+                floatingBtn.classList.add('show');
+            } else {
+                floatingBtn.classList.remove('show');
+            }
+        });
+
+        // Floating Action Button - Scroll to Top
+        document.querySelector('.floating-action-btn').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Sticky Navbar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.sticky-nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+        const mobileNavMenu = document.getElementById('mobile-nav-menu');
+        const mobileNavClose = document.getElementById('mobile-nav-close');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            mobileNavOverlay.classList.add('active');
+            mobileNavMenu.classList.add('active');
+        });
+        
+        mobileNavClose.addEventListener('click', function() {
+            mobileNavOverlay.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+        });
+        
+        mobileNavOverlay.addEventListener('click', function() {
+            mobileNavOverlay.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+        });
+        
+        // Mobile Dropdown Toggle
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+        
+        mobileDropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const dropdown = this.parentElement;
+                dropdown.classList.toggle('active');
+            });
+        });
+
+        // Lightbox Functionality
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        
+        let currentImageIndex = 0;
+        
+        // Open lightbox
+        galleryItems.forEach((img, index) => {
+            img.addEventListener('click', function() {
+                currentImageIndex = index;
+                lightboxImage.src = this.src;
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Close lightbox
+        lightboxClose.addEventListener('click', function() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Navigation
+        lightboxPrev.addEventListener('click', function() {
+            currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentImageIndex].src;
+        });
+        
+        lightboxNext.addEventListener('click', function() {
+            currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+            lightboxImage.src = galleryItems[currentImageIndex].src;
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                } else if (e.key === 'ArrowLeft') {
+                    lightboxPrev.click();
+                } else if (e.key === 'ArrowRight') {
+                    lightboxNext.click();
+                }
+            }
+        });
+
+        // Page Load Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in classes to sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
